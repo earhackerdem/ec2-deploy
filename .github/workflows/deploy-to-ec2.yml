@@ -44,11 +44,11 @@ jobs:
         
         # Create deployment directory if it doesn't exist
         ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
-          mkdir -p /var/www/html/react-app
+          mkdir -p react-app
         '
         
         # Copy build files to EC2
-        scp -o StrictHostKeyChecking=no -i private_key.pem -r build/* ${USER}@${HOST}:/var/www/html/react-app/
+        scp -o StrictHostKeyChecking=no -i private_key.pem -r build/* ${USER}@${HOST}:react-app
         
         # Clean up private key
         rm -f private_key.pem 
