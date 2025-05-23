@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploying to EC2
 
 on:
   pull_request:
@@ -15,11 +15,11 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18.x'
+        node-version: '20.x'
         cache: 'npm'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
 
     - name: Build application
       run: npm run build
@@ -44,11 +44,11 @@ jobs:
         
         # Create deployment directory if it doesn't exist
         ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
-          mkdir -p /var/www/html/react-app
+          mkdir -p react-app
         '
         
         # Copy build files to EC2
-        scp -o StrictHostKeyChecking=no -i private_key.pem -r build/* ${USER}@${HOST}:/var/www/html/react-app/
+        scp -o StrictHostKeyChecking=no -i private_key.pem -r build/* ${USER}@${HOST}:react-app
         
         # Clean up private key
         rm -f private_key.pem 
